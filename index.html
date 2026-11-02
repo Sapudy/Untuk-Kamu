@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f6f0ff">
+    <title>Untuk Kamu, yang Manis</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --purple: #a477df;
+            --purple-dark: #8052ba;
+            --ink: #4e405d;
+            --paper: #fffdfb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100svh;
+            margin: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: grid;
+            place-items: center;
+            padding: 28px 18px;
+            color: var(--ink);
+            background:
+                radial-gradient(ellipse at 12% 18%, #eadcff 0, transparent 34%),
+                radial-gradient(ellipse at 88% 82%, #f0e5ff 0, transparent 35%),
+                #f8f4ff;
+            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        }
+
+        .scene {
+            position: relative;
+            z-index: 1;
+            isolation: isolate;
+            width: min(100%, 620px);
+            text-align: center;
+        }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            padding: clamp(20px, 5vw, 38px) clamp(12px, 4vw, 30px);
+            animation: card-arrives 800ms cubic-bezier(.2, .8, .2, 1) both;
+        }
+
+        .eyebrow {
+            margin: 0 0 9px;
+            color: var(--purple-dark);
+            font-size: .76rem;
+            font-weight: 800;
+            letter-spacing: .19em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.2rem, 9vw, 3.55rem);
+            font-weight: 500;
+            letter-spacing: -.055em;
+            line-height: 1.08;
+        }
+
+        .flower {
+            position: relative;
+            width: 146px;
+            height: 146px;
+            margin: 0 auto 24px;
+            animation: flower-sway 3s ease-in-out infinite;
+            transform-origin: 50% 92%;
+        }
+
+        .petal {
+            position: absolute;
+            top: 11px;
+            left: 53px;
+            width: 40px;
+            height: 59px;
+            border: 1px solid rgb(255 255 255 / 70%);
+            border-radius: 50% 50% 45% 45%;
+            background: linear-gradient(145deg, #e8d6ff, #a477df);
+            box-shadow: 0 4px 10px rgb(112 75 158 / 18%);
+            transform-origin: 50% 62px;
+        }
+
+        .petal:nth-child(1) { transform: rotate(0deg); }
+        .petal:nth-child(2) { transform: rotate(45deg); }
+        .petal:nth-child(3) { transform: rotate(90deg); }
+        .petal:nth-child(4) { transform: rotate(135deg); }
+        .petal:nth-child(5) { transform: rotate(180deg); }
+        .petal:nth-child(6) { transform: rotate(225deg); }
+        .petal:nth-child(7) { transform: rotate(270deg); }
+        .petal:nth-child(8) { transform: rotate(315deg); }
+
+        .flower-center {
+            position: absolute;
+            z-index: 1;
+            top: 51px;
+            left: 53px;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #fff3bd;
+            border-radius: 50%;
+            background: #ffd86e;
+            box-shadow: 0 3px 8px rgb(176 125 46 / 20%);
+        }
+
+        .flower-stem {
+            position: absolute;
+            top: 88px;
+            left: 69px;
+            width: 8px;
+            height: 53px;
+            border-radius: 9px;
+            background: #83b98a;
+            transform: rotate(-5deg);
+        }
+
+        .flower-leaf {
+            position: absolute;
+            top: 103px;
+            left: 76px;
+            width: 28px;
+            height: 15px;
+            border-radius: 100% 0 100% 0;
+            background: #9ac99c;
+            transform: rotate(-17deg);
+        }
+
+        .message {
+            min-height: 76px;
+            margin: 20px auto 24px;
+            color: #806873;
+            font-size: clamp(1rem, 3.7vw, 1.15rem);
+            line-height: 1.75;
+        }
+
+        .message.pop {
+            animation: message-pop 360ms ease;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .sweet-button {
+            display: inline-flex;
+            min-height: 50px;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 13px 22px;
+            border: 0;
+            border-radius: 999px;
+            color: white;
+            background: linear-gradient(135deg, #b18ae8, #8b5fc7);
+            box-shadow: 0 9px 20px rgb(139 95 199 / 28%);
+            cursor: pointer;
+            font: inherit;
+            font-size: .97rem;
+            font-weight: 700;
+            transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+
+        .sweet-button.secondary {
+            border: 1px solid #d9c5ed;
+            color: var(--purple-dark);
+            background: #fbf8ff;
+            box-shadow: none;
+        }
+
+        .sweet-button:hover {
+            box-shadow: 0 12px 24px rgb(139 95 199 / 36%);
+            transform: translateY(-2px);
+        }
+
+        .sweet-button.secondary:hover {
+            box-shadow: 0 8px 18px rgb(112 75 158 / 14%);
+        }
+
+        .sweet-button:active {
+            transform: translateY(1px) scale(.98);
+        }
+
+        .sweet-button:focus-visible {
+            outline: 3px solid #70449f;
+            outline-offset: 4px;
+        }
+
+        .signature {
+            margin: 25px 0 0;
+            color: #9c8bab;
+            font-size: .84rem;
+        }
+
+        .letter {
+            margin-top: 20px;
+            padding: 18px 20px;
+            border: 1px dashed #c3a2e8;
+            border-radius: 18px;
+            color: #806873;
+            background: #fbf7ff;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1rem;
+            line-height: 1.75;
+            text-align: left;
+        }
+
+        .letter p {
+            margin: 0;
+        }
+
+        .letter[hidden] {
+            display: none;
+        }
+
+        .music-status {
+            min-height: 1.3em;
+            margin: 10px 0 0;
+            color: #8d7b9f;
+            font-size: .78rem;
+        }
+
+        .falling-petal {
+            position: fixed;
+            z-index: 0;
+            top: -30px;
+            left: var(--petal-left);
+            width: 13px;
+            height: 22px;
+            border: 1px solid rgb(255 255 255 / 55%);
+            border-radius: 100% 0 100% 0;
+            background: linear-gradient(145deg, #eadbff, #a477df);
+            opacity: .72;
+            pointer-events: none;
+            animation: petal-fall var(--petal-duration) linear var(--petal-delay) infinite;
+        }
+
+        .decoration {
+            position: absolute;
+            z-index: 0;
+            color: #b99adf;
+            user-select: none;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .sparkle-one { top: 9%; left: 3%; font-size: 2.6rem; }
+        .sparkle-two { top: 20%; right: 2%; font-size: 2.1rem; animation-delay: -1.5s; }
+        .sparkle-three { right: 9%; bottom: 1%; font-size: 2.6rem; animation-delay: -2.6s; }
+        .sparkle-four { bottom: 12%; left: 0; font-size: 1.9rem; animation-delay: -.8s; }
+
+        .heart-pop {
+            position: fixed;
+            z-index: 3;
+            pointer-events: none;
+            animation: heart-float 1.15s ease-out forwards;
+        }
+
+        .confetti {
+            position: fixed;
+            z-index: 3;
+            width: 10px;
+            height: 14px;
+            border-radius: 3px;
+            background: var(--confetti-color);
+            pointer-events: none;
+            animation: confetti-burst 1.5s cubic-bezier(.15, .65, .25, 1) forwards;
+        }
+
+        @keyframes card-arrives {
+            from { opacity: 0; transform: translateY(18px) scale(.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes flower-sway {
+            0%, 100% { transform: rotate(-10deg) scale(1.06); }
+            50% { transform: rotate(10deg) scale(1.16); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-8deg) scale(.96); }
+            50% { transform: translateY(-22px) rotate(12deg) scale(1.12); }
+        }
+
+        @keyframes message-pop {
+            0% { opacity: .35; transform: translateY(5px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes heart-float {
+            0% { opacity: 0; transform: translate(-50%, 0) scale(.5) rotate(-12deg); }
+            20% { opacity: 1; transform: translate(-50%, -14px) scale(1.4) rotate(8deg); }
+            100% { opacity: 0; transform: translate(-50%, -160px) scale(1.05) rotate(18deg); }
+        }
+
+        @keyframes petal-fall {
+            0% { opacity: 0; transform: translate3d(0, -5vh, 0) rotate(0deg); }
+            12% { opacity: .72; }
+            88% { opacity: .65; }
+            100% { opacity: 0; transform: translate3d(var(--petal-drift), 110vh, 0) rotate(540deg); }
+        }
+
+        @keyframes confetti-burst {
+            0% { opacity: 1; transform: translate(-50%, 0) rotate(0deg) scale(1); }
+            100% { opacity: 0; transform: translate(var(--confetti-x), var(--confetti-y)) rotate(var(--confetti-rotation)) scale(.55); }
+        }
+
+        @media (max-width: 380px) {
+            .card { padding-right: 8px; padding-left: 8px; }
+            .sweet-button { padding-right: 17px; padding-left: 17px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="falling-petals" id="falling-petals" aria-hidden="true"></div>
+    <main class="scene">
+        <span class="decoration sparkle-one" aria-hidden="true">✦</span>
+        <span class="decoration sparkle-two" aria-hidden="true">♡</span>
+        <span class="decoration sparkle-three" aria-hidden="true">✿</span>
+        <span class="decoration sparkle-four" aria-hidden="true">✧</span>
+
+        <section class="card" aria-labelledby="page-title">
+            <div class="flower" role="img" aria-label="Bunga ungu yang bergoyang">
+                <span class="petal"></span><span class="petal"></span>
+                <span class="petal"></span><span class="petal"></span>
+                <span class="petal"></span><span class="petal"></span>
+                <span class="petal"></span><span class="petal"></span>
+                <span class="flower-center"></span>
+                <span class="flower-stem"></span>
+                <span class="flower-leaf"></span>
+            </div>
+
+            <p class="eyebrow">sebuah kejutan kecil untukmu</p>
+            <h1 id="page-title">Untukmu,<br>yang istimewa.</h1>
+            <p class="message" id="sweet-message" aria-live="polite">
+                Semoga harimu secerah senyummu. Jangan lupa, dunia terasa lebih manis karena ada kamu. ♡
+            </p>
+            <div class="actions">
+                <button class="sweet-button" id="letter-button" type="button" aria-expanded="false" aria-controls="love-letter">
+                    <span aria-hidden="true">💌</span>
+                    <span>Buka surat</span>
+                </button>
+                <button class="sweet-button secondary" id="music-button" type="button" aria-pressed="false">
+                    <span aria-hidden="true">🎵</span>
+                    <span>Nyalakan musik</span>
+                </button>
+            </div>
+            <div class="letter" id="love-letter" hidden>
+                <p id="letter-content">Untuk kamu, semoga hari-harimu dipenuhi tawa, hal-hal kecil yang membahagiakan, dan orang-orang yang menyayangimu. Terima kasih sudah menjadi dirimu sendiri. Kamu itu hadiah kecil yang membuat dunia lebih indah. ♡</p>
+            </div>
+            <p class="music-status" id="music-status" aria-live="polite"></p>
+            <p class="signature">dibuat khusus untuk bikin kamu tersenyum ✨</p>
+        </section>
+    </main>
+    <script>
+        const messages = [
+            "Kamu itu kayak bunga: hadir sebentar aja sudah bikin suasana jadi lebih indah. 🌷",
+            "Kalau senyum kamu dijadikan matahari, kayaknya dunia nggak butuh pagi lagi. ☀️",
+            "Ingat ya, kamu hebat, kamu berharga, dan kamu pantas mendapat hal-hal baik. 💛",
+            "Dari sekian banyak hal lucu di dunia, senyummu tetap juaranya. ♡",
+            "Semoga hari ini banyak hal kecil yang membuat hatimu besar bahagianya. ✨"
+        ];
+        let lastMessageIndex = -1;
+
+        const message = document.querySelector("#sweet-message");
+        const letterButton = document.querySelector("#letter-button");
+        const letter = document.querySelector("#love-letter");
+        const musicButton = document.querySelector("#music-button");
+        const musicStatus = document.querySelector("#music-status");
+
+        for (let index = 0; index < 9; index += 1) {
+            const petal = document.createElement("span");
+            petal.className = "falling-petal";
+            petal.style.setProperty("--petal-left", `${Math.random() * 100}%`);
+            petal.style.setProperty("--petal-duration", `${9 + Math.random() * 8}s`);
+            petal.style.setProperty("--petal-delay", `${-Math.random() * 16}s`);
+            petal.style.setProperty("--petal-drift", `${Math.round(Math.random() * 150 - 75)}px`);
+            document.querySelector("#falling-petals").append(petal);
+        }
+
+        letterButton.addEventListener("click", () => {
+            const isOpening = letter.hidden;
+            letter.hidden = !isOpening;
+            letterButton.setAttribute("aria-expanded", String(isOpening));
+            letterButton.querySelector("span:last-child").textContent = isOpening ? "Tutup surat" : "Buka surat";
+            if (!isOpening) {
+                return;
+            }
+
+            let nextIndex;
+            do {
+                nextIndex = Math.floor(Math.random() * messages.length);
+            } while (nextIndex === lastMessageIndex);
+
+            lastMessageIndex = nextIndex;
+            message.textContent = messages[nextIndex];
+            message.classList.remove("pop");
+            void message.offsetWidth;
+            message.classList.add("pop");
+
+            const bounds = letterButton.getBoundingClientRect();
+            const originX = bounds.left + bounds.width / 2;
+            const originY = bounds.top;
+
+            for (let index = 0; index < 5; index += 1) {
+                const heart = document.createElement("span");
+                heart.className = "heart-pop";
+                heart.setAttribute("aria-hidden", "true");
+                heart.textContent = ["💖", "💕", "💗", "💝"][Math.floor(Math.random() * 4)];
+                heart.style.left = `${originX + Math.random() * 100 - 50}px`;
+                heart.style.top = `${originY}px`;
+                heart.style.fontSize = `${24 + Math.random() * 20}px`;
+                heart.style.animationDelay = `${Math.random() * 180}ms`;
+                document.body.append(heart);
+                heart.addEventListener("animationend", () => heart.remove(), { once: true });
+            }
+
+            const colors = ["#a477df", "#d4b8ff", "#8b5fc7", "#c5a5ec", "#ffd86e"];
+            for (let index = 0; index < 18; index += 1) {
+                const confetti = document.createElement("span");
+                confetti.className = "confetti";
+                confetti.setAttribute("aria-hidden", "true");
+                confetti.style.left = `${originX}px`;
+                confetti.style.top = `${originY}px`;
+                confetti.style.setProperty("--confetti-color", colors[index % colors.length]);
+                confetti.style.setProperty("--confetti-x", `${Math.random() * 300 - 150}px`);
+                confetti.style.setProperty("--confetti-y", `${-60 - Math.random() * 180}px`);
+                confetti.style.setProperty("--confetti-rotation", `${Math.random() * 720 - 360}deg`);
+                confetti.style.animationDelay = `${Math.random() * 120}ms`;
+                document.body.append(confetti);
+                confetti.addEventListener("animationend", () => confetti.remove(), { once: true });
+            }
+        });
+
+        const song = new Audio("lagu.mp3");
+        song.loop = true;
+        song.preload = "none";
+
+        musicButton.addEventListener("click", async () => {
+            if (song.paused) {
+                try {
+                    await song.play();
+                    musicButton.setAttribute("aria-pressed", "true");
+                    musicButton.querySelector("span:last-child").textContent = "Matikan musik";
+                    musicStatus.textContent = "Musik sedang diputar.";
+                } catch (error) {
+                    musicButton.setAttribute("aria-pressed", "false");
+                    musicButton.querySelector("span:last-child").textContent = "Nyalakan musik";
+                    musicStatus.textContent = "Format lagu belum didukung. Coba gunakan file MP3 yang benar-benar berformat MP3.";
+                    console.error("Gagal memutar lagu:", error);
+                }
+                return;
+            }
+
+            song.pause();
+            musicButton.setAttribute("aria-pressed", "false");
+            musicButton.querySelector("span:last-child").textContent = "Nyalakan musik";
+            musicStatus.textContent = "Musik dimatikan.";
+        });
+    </script>
+</body>
+</html>
